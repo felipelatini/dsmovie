@@ -1,0 +1,5 @@
+https://start.spring.io/
+- Spring Web
+- Spring Data JPA
+- H2 Database
+- PosgreSQL Driver
