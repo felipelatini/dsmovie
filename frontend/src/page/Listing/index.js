@@ -21,7 +21,7 @@ function Listing() {
     })
 
     useEffect(() =>{
-        axios.get(`${BASE_URL}/movies?size:128page=${pageNumber}`)
+        axios.get(`${BASE_URL}/movies?page=${pageNumber}`)
         .then(response => {
             setPage({
                 content: response.data.content,
@@ -37,9 +37,23 @@ function Listing() {
         })
     }, [pageNumber])
 
+    const handlePageChange = (newPageNumber) => {
+        setPageNumber(newPageNumber)
+    }
+
     return(
         <>
-            <Pagination />
+            <Pagination 
+                last={page.last}
+                totalPages={page.totalPages}
+                totalElements={page.totalElements}
+                size={page.size}
+                number={page.number}
+                first={page.first}
+                numberOfElement={page.numberOfElement}
+                empty={page.empty} 
+                onChange={handlePageChange} />
+
             <div className='container'>
                 <div className='row'>
                     {
