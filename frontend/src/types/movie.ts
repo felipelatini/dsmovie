@@ -3,7 +3,7 @@ export type Movie = {
     title: string;
     score: number;
     count: number;
-    image: string;    
+    image: string;
 }
 
 export type MoviePage = {
