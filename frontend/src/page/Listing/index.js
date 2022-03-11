@@ -4,61 +4,51 @@ import MovieCard from '../../components/MovieCard';
 import axios from 'axios';
 import { BASE_URL } from '../../utils/requests';
 import { useEffect, useState } from 'react';
-//import { MoviePage } from '../../types/movie/movie.ts';
 
 function Listing() {
     const [pageNumber, setPageNumber] = useState(0)
 
+    const [page, setPage] = useState({
+        content: [],
+        last: true,
+        totalPages: 0,
+        totalElements: 0,
+        size: 12,
+        number: 0,
+        first: true,
+        numberOfElement: 0,
+        empty: true
+    })
+
     useEffect(() =>{
-        axios.get(`${BASE_URL}/movies?size:128page=1`)
+        axios.get(`${BASE_URL}/movies?size:128page=${pageNumber}`)
         .then(response => {
-            //const data = response.data as MoviePage
-            setPageNumber(response.data.number)
+            setPage({
+                content: response.data.content,
+                last: response.data.last,
+                totalPages: response.data.totalPages,
+                totalElements: response.data.totalElements,
+                size: response.data.size,
+                number: response.data.number,
+                first: response.data.first,
+                numberOfElement: response.data.numberOfElement,
+                empty: response.data.empty,
+            })
         })
-    }, [])
+    }, [pageNumber])
 
     return(
         <>
-            <p>{pageNumber}</p>
             <Pagination />
             <div className='container'>
                 <div className='row'>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>
-                    <div className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
-                        <MovieCard />
-                    </div>                                                                                                                                                                                                                            
+                    {
+                        page.content.map(item => (
+                            <div key={item.id} className='col-sm-6 col-lg-4 col-xl-3 mb-3'>
+                                <MovieCard id={item.id} title={item.title} score={item.score} count={item.count} image={item.image} />
+                            </div>
+                        ))
+                    }
                 </div>
             </div>
         </>
