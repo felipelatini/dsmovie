@@ -1,9 +1,9 @@
 import './style.css';
+import { useEffect, useState } from 'react';
+import { BASE_URL } from '../../utils/requests';
+import axios from 'axios';
 import Pagination from '../../components/Pagination';
 import MovieCard from '../../components/MovieCard';
-import axios from 'axios';
-import { BASE_URL } from '../../utils/requests';
-import { useEffect, useState } from 'react';
 
 function Listing() {
     const [pageNumber, setPageNumber] = useState(0)
